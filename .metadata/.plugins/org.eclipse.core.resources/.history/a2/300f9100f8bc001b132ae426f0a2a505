@@ -1,0 +1,74 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+//import java.util.*;
+import java.util.UUID;
+
+public class HelloWorld {
+
+	
+	
+	public static void main(String[] args)  throws IOException
+    {
+		
+		
+	    
+        // initialize hl7 string
+        String str = "MSH|^~\\&|ABC|AVAILITY|HEALTHPLAN|WELLCARE|"+ GetDate() +"||ORU^R01|" +  RandomController() + "|P|2.3\n"
+        		+ "PID|1||MRN123^^^ABC^^1||CAT^CLAW^A||19610924|F|||PO BOX 123^^CAPTAIN COOK^HI^96825||8081112|||||109258872\n"
+        		+ "PV1|1|O|||||123456^WHO^JOHN^M (ABC)^^^^^NPI^^^^NPI|||||||||||OP||||||||||||||||||||||||||20201118000000\n"
+        		+ "NTE|1|L|Result is negative.";
+        try {
+  
+            // attach a file to FileWriter
+            FileWriter fw
+                = new FileWriter("/Users/joemcostes/Public/" + UUID.randomUUID() + ".txt");
+  
+            // read each character from string and write
+            // into FileWriter
+            for (int i = 0; i < str.length(); i++)
+                fw.write(str.charAt(i));
+  
+            System.out.println("Successfully written");
+  
+            // close the file
+            fw.close();
+        }
+        catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+	
+	private static String RandomController() {
+		// TODO Auto-generated method stub
+		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+		StringBuilder sb = new StringBuilder(20);
+		Random random = new Random();
+		for (int i = 0; i < 20; i++) {
+		    char c = chars[random.nextInt(chars.length)];
+		    sb.append(c);
+		}
+		return sb.toString();
+
+	}
+
+	private static long GetDate()
+	{
+		Date date;
+	    SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+
+	    try {
+	        Date _time;
+			date = df.parse(String.valueOf(_time.getTime()));
+	    } catch (Exception e) {
+	        throw new RuntimeException("Failed to parse date: ", e);
+	    }
+
+	    return date.getTime();
+	}	
+
+}
+
+	
